@@ -4,8 +4,7 @@
   "description": "this is first node js project",
   "main": "index.js",
   "scripts": {
-    "start": "SET SECRET=jkewhf57465dsfhghd57sdkjfj576sdjjk && nodemon index",
-    "test": "SET SECRET=jkewhf57465dsfhghd57sdkjfj576sdjjk && jasmine"
+    "start": "SET SECRET=jkewhf57465dsfhghd57sdkjfj576sdjjk && nodemon index"
   },
   "author": "mona soliman",
   "license": "ISC",
