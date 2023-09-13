@@ -1,9 +1,10 @@
-var usersModel = require('../models/users')
+var usersModel = require('../models/user')
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 function saveUser(user) {
    return usersModel.create(user)
+
 }
 
 function getAllUsers() {

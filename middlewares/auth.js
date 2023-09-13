@@ -12,7 +12,7 @@ async function auth(req, res, next) {
     try{
 
         var decoded = await promisify(jwt.verify)(req.headers.authorization,process.env.SECRET)
-        console.log(decoded.id);
+        // console.log(decoded.id);
         req.id=decoded.id
     
     }catch(err){

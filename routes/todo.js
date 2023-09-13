@@ -11,11 +11,10 @@ router.get("/", async(req, res) => {
         
     try{
         var todos =await getAllTodos()
-        res.json({ data: todos });
+        res.status(200).json({ data: todos });
     }catch(err){
         res.status(500).json({message:"Couldn't find todos try again"})
-    }
-    
+    }   
 
 })
 

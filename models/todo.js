@@ -25,7 +25,8 @@ var todoSchema=mongoose.Schema({
     },
     userId:{
         type:mongoose.SchemaTypes.ObjectId,
-        ref:'User'
+        ref:'User',
+        required:true
     }
 })
 

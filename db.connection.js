@@ -21,7 +21,6 @@ const connectToDatabase = async () => {
 const closeDatabase = async () => {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
-    await mongod.stop();
 }
 
 /**

@@ -29,7 +29,7 @@ app.use("/user",userRoutes)
 app.use('/todo',todoRoutes)
 
 app.get('/',async function(req,res){
-    var todos=   await todosModel.find()
+    var todos= await todosModel.find()
     res.status(200).json({todos})
 })
 
@@ -55,11 +55,11 @@ app.use(function(req,res,next){
 })
 
 
-connectToDatabase().then(()=>{
-    console.log("connected to db successfully")
-}).catch((err)=>{
-    console.log(err);
-})
+// connectToDatabase().then(()=>{
+//     console.log("connected to db successfully")
+// }).catch((err)=>{
+//     console.log(err);
+// })
 
 
 var port = 3333
@@ -67,7 +67,7 @@ app.listen(port, () => {
     console.log(`server listening successfully on port ${port}`);
 })
 
-
+module.exports= app
 
 
 //cors
