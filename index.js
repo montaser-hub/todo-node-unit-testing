@@ -67,7 +67,6 @@ app.listen(port, () => {
     console.log(`server listening successfully on port ${port}`);
 })
 
-module.exports= app
 
 
 //cors
