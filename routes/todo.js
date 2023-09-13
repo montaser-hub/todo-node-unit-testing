@@ -4,7 +4,7 @@ var router=express.Router()
 var {getAllTodos,saveTodo,getTodoById,updateTodoById}=require('../controllers/todo')
 var auth=require('../middlewares/auth')
 
-router.use(auth)
+// router.use(auth)
 
 //get all todos
 router.get("/", async(req, res) => {
@@ -39,7 +39,7 @@ router.post("/",auth,async (req, res) => {
 
 
 //get todo by id
-router.get("/:id",async (req, res) => {
+router.get("/:id",auth,async (req, res) => {
     var { id } = req.params
 
     try{
@@ -59,7 +59,7 @@ router.get("/:id",async (req, res) => {
 
 
 //update todo by id
-router.patch("/:id",async(req,res)=>{
+router.patch("/:id",auth,async(req,res)=>{
     var {title} = req.body;
     var {id}=req.params
    var updatedTodo=await updateTodoById(title,id)
