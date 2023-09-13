@@ -1,47 +1,75 @@
+// const validator=require('validator')
 
-const express = require("express")
-const cors=require("cors")
+// console.log( validator.isEmail("mona@gmail.com"));
 
 
-var todosRoutes=require('./routes/todos')
-var usersRoutes=require('./routes/users')
-const app = express()
+//////////////////////////////////////////////////////////////////////////////
 
-require("./db.connection")
 
+const express = require('express');
+// const mongoose=require('mongoose');
+const cors=require('cors');
+var todoRoutes=require('./routes/todo')
+var userRoutes=require('./routes/user')
+var todosModel=require('./models/todo')
+console.log(process.env.x);
+
+
+var app = express()
 //middleware
+
+app.use(cors({
+    origin:'*',
+}))
 app.use(express.json())
-//cors
-app.use(cors())
 
-//custom middleware
-// app.use((req, res, next) => {
+//handling routes
+app.use("/user",userRoutes)
+app.use('/todo',todoRoutes)
 
-//     console.log("request");
-//     next()
-
-
-// })
-
-//routes
-app.use('/todos', todosRoutes)
-app.use("/users", usersRoutes)
-
-
-
-app.listen(3000, () => {
-
-    console.log("server started listening successfully");
+app.get('/',async function(req,res){
+    var todos=   await todosModel.find()
+    res.status(200).render('todos',{todos})
 })
 
 
+//not found
+app.use('*',function(req,res,next){
+  res.status(404).json({message:'NOT FOUND'})
+})
+
+//error handling
+app.use(function(err,req,res,next){
+ 
+    res.status(500).json({message:'Something went wrong !'})
+
+})
+
+//custom middleware
+app.use(function(req,res,next){
+
+   console.log(req.body);
+    next();
+
+})
 
 
+// mongoose.connect("mongodb://127.0.0.1:27017/todoDB").then(()=>{
+//     console.log("connected to db successfully")
+// }).catch((err)=>{
+//     console.log(err);
+// })
+
+require("./db.connection")
+
+var port = 3333
+app.listen(port, () => {
+    console.log(`server listening successfully on port ${port}`);
+})
 
 
+module.exports= app
 
+//cors
 
-
-
-
-
+//www.example.com             ex.www.example.com
