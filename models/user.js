@@ -31,6 +31,6 @@ userSchema.pre('save', async function (next) {
     // console.log(this.password);
 })
 
-var usersModel = mongoose.model('User', userSchema)
-module.exports = usersModel
+var userModel = mongoose.model('User', userSchema)
+module.exports = userModel
 

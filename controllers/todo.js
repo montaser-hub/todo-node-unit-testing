@@ -1,32 +1,39 @@
 
-var todosModel=require('../models/todo')
+var todosModel = require('../models/todo')
 
-function getAllTodos(){
-   
-   return  todosModel.find().populate('userId',"name")
-    
-  }
+function getAllTodos() {
+
+  return todosModel.find().populate('userId', "name")
+
+}
 
 
-function saveTodo(todo){
+function saveTodo(todo) {
 
- return todosModel.create(todo)
+  return todosModel.create(todo)
 }
 
 // for lab
-function getTodoById(id){
-     
- return todosModel.findOne({_id:id})
+function getTodoById(id) {
+
+  return todosModel.findOne({ _id: id })
 
 }
 
-function updateTodoById(title,id){
-    
-   return todosModel.findByIdAndUpdate(id,{title:title},{new:true})
+function updateTitleTodoById(title, id) {
+
+  return todosModel.findByIdAndUpdate(id, { title: title }, { new: true })
   // todosModel.fineOneAndUpdate({})
 }
 
-async function deleteAllTodos() {
-return await todosModel.deleteMany()
+function getUserTodos(id) {
+  return todosModel.find({ userId: id })
 }
-module.exports={getAllTodos,saveTodo,getTodoById,updateTodoById,deleteAllTodos}
+
+ function deleteAllTodos() {
+  return  todosModel.deleteMany()
+}
+
+
+
+module.exports = { getAllTodos, saveTodo, getTodoById, updateTitleTodoById, deleteAllTodos, getUserTodos }

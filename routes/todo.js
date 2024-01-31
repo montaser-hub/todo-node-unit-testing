@@ -1,28 +1,24 @@
 
 const express=require('express')
 var router=express.Router()
-var {getAllTodos,saveTodo,getTodoById,updateTodoById}=require('../controllers/todo')
+var {getAllTodos,saveTodo,getTodoById, updateTitleTodoById, getUserTodos}=require('../controllers/todo')
 var auth=require('../middlewares/auth')
 
 // router.use(auth)
 
 //get all todos
-router.get("/", async(req, res) => {
-        
+router.get("/", async(_req, res) => {        
     try{
         var todos =await getAllTodos()
         res.status(200).json({ data: todos });
     }catch(err){
         res.status(500).json({message:"Couldn't find todos try again"})
     }   
-
 })
 
 //save todo
 router.post("/",auth,async (req, res) => {
-    var title = req.body.title //{title:"new todo"}
-    //  console.log(todo);
-
+    var title = req.body.title 
     try{
 
         var newTodo=  await saveTodo({title:title,userId:req.id})
@@ -30,10 +26,6 @@ router.post("/",auth,async (req, res) => {
     }catch(err){
         res.status(500).json({message: err.message})
     }
-  
-
-   
-
 })
 
 
@@ -51,22 +43,40 @@ router.get("/:id",auth,async (req, res) => {
     }catch(err){
           res.status(500).json({message:err.message})
     }
- 
-
-
 })
 
-
+//lab
 //update todo by id
-router.patch("/:id",auth,async(req,res)=>{
-    var {title} = req.body;
-    var {id}=req.params
-   var updatedTodo=await updateTodoById(title,id)
-    res.status(200).json({data:updatedTodo})
+router.patch("/:id",auth, async (req, res) => {
+    var { title } = req.body
+    var { id } = req.params
 
+    try {
+        if(id && title){
+            var UpdatedTodo = await updateTitleTodoById(id, title)
+            res.status(200).json({data:UpdatedTodo})
+        }
+        else res.status(400).json({message:"must provide title and id to edit todo"})
+    }  catch (e) {
+        res.status(400).json({ message: e.message })
+    }
 })
 
-//delete by id
+//get all todos for user=> id
+router.get("/user/:id",auth, async (req, res) => {
+    var { id } = req.params
+
+    try {
+        if(id){
+            var todos = await getUserTodos(id)
+           todos.length>0 && res.status(200).json({data:todos})
+           todos.length==0 && res.status(200).json({ message: "Couldn't find any todos for " + id })
+        }
+        else res.status(400).json({message:"must provide user id to get his todos"})
+    }  catch (e) {
+        res.status(400).json({ message: e.message })
+    }
+})
 
 
 module.exports=router

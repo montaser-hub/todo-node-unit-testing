@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "SET SECRET=this-is-my-jwt-secret&&nodemon index ",
-    "test": "SET SECRET=this-is-my-jwt-secret&& nodemon --exec jasmine"
+    "test": "SET SECRET=this-is-my-jwt-secret&&nodemon --exec jasmine"
   },
   "author": "",
   "license": "ISC",

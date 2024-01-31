@@ -13,7 +13,7 @@ var todoRoutes=require('./routes/todo')
 var userRoutes=require('./routes/user')
 var todosModel=require('./models/todo');
 const { connectToDatabase } = require('./db.connection');
-console.log(process.env.x);
+
 
 
 var app = express()
@@ -67,7 +67,7 @@ app.listen(port, () => {
     console.log(`server listening successfully on port ${port}`);
 })
 
-
+module.exports= app
 
 //cors
 
