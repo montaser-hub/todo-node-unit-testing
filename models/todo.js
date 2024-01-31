@@ -8,20 +8,13 @@ var todoSchema=mongoose.Schema({
         maxLength:25,
         required:true,
         // unique:true,
-        trim:true,
-        // validate: {
-        //     validator: function(v) {
-        //       return /\d{3}-\d{3}-\d{4}/.test(v);
-        //     },
-        //     message: props => `${props.value} is not a valid title!`
-        //   },
-        //   default:"any title"
+        trim:true
 
     },
     status:{
         type:String,
-        enum:["Todo","In progress","Done"],
-        default:"Todo"
+        enum:["To do","In progress","Done"],
+        default:"To do"
     },
     userId:{
         type:mongoose.SchemaTypes.ObjectId,

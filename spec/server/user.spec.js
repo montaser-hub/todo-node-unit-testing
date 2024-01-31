@@ -4,10 +4,10 @@ const { connectToDatabase, clearDatabase } = require("../../db.connection")
 
 const request =supertest(app)
 
-xdescribe("user routes ",()=>{
+describe("user routes ",()=>{
    let mockUser,userInDB
     beforeAll(async()=>{
-        await connectToDatabase()
+        // await connectToDatabase()
         mockUser={name:"ahmed",email:"asd@xxx.com",password:"1234"}
     })
 it("req get (/user/) expect to get all users",async()=>{
@@ -23,7 +23,6 @@ it("req get (/user/) expect to get all users",async()=>{
     })
     it("req post(/user/signup) expect to add new user with wrong body",async()=>{
         let res= await request.post("/user/signup").send({name:"ali",password:"1234"})
-        // console.log('res: ', res.body);
         expect(res.body.message).toContain("`email` is required")
     })
     it("req get (/user/id) expect to get user with id",async()=>{

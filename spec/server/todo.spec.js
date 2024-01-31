@@ -2,19 +2,20 @@
 
 const supertest = require("supertest")
 const app = require("../..")
-const { connectToDatabase, clearDatabase } = require("../../db.connection")
+const {  clearDatabase } = require("../../db.connection")
 
 const request = supertest(app)
 
-fdescribe("todo routes ", () => {
+describe("todo routes ", () => {
     let mockUser,token,userInDB,todoInDB
-    beforeAll(async () => {/////
-        await connectToDatabase()
-        mockUser = { name: "ahmed", email: "asd@xxx.com", password: "1234" }
-        let res= await request.post("/user/signup").send(mockUser)
-         userInDB= res.body.data
-        let res2= await request.post("/user/login").send({email:userInDB.email,password:mockUser.password})
-        token = res2.body.token
+    beforeAll(async () => {
+        
+            mockUser = { name: "ahmed", email: "asd123@xxx.com", password: "123" }
+            let res= await request.post("/user/signup").send(mockUser)
+             userInDB= res.body.data
+            let res2= await request.post("/user/login").send({email:userInDB.email,password:mockUser.password})
+            token = res2.body.token
+       
     })
     it("req get (/todo/) expect to get all todos", async () => {
         let res= await request.get("/todo")
@@ -25,11 +26,16 @@ fdescribe("todo routes ", () => {
         expect(res.status).toBe(401)
         expect(res.body.message).toContain("please login first")
     })
-    it("req post (/todo/) expect to not to add with correct auth", async () => {
+    it("req post (/todo/) expect to add with correct auth", async () => {
         let res= await request.post("/todo").send({title:"eat lunch"}).set({authorization:token})
         expect(res.status).toBe(201)
         expect(res.body.data.title).toBe("eat lunch")
         todoInDB= res.body.data
+    })
+    it("req post (/todo/) expect to not add with correct auth", async () => {
+        let res= await request.post("/todo").send({title:"ea"}).set({authorization:token})
+        expect(res.status).toBe(500)
+        expect(res.body.message).toContain("title is less than 3 characters")
     })
     it("req get (/todo/) expect to get the just added todo", async () => {
         let res= await request.get("/todo")
@@ -41,6 +47,7 @@ fdescribe("todo routes ", () => {
         let res= await request.get("/todo/"+todoInDB._id).set({authorization:token})
         expect(res.body.data._id).toBe(todoInDB._id)
     })
+
     afterAll(async () => {
         await clearDatabase()
     })

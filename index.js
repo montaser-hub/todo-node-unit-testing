@@ -7,7 +7,6 @@
 
 
 const express = require('express');
-// const mongoose=require('mongoose');
 const cors=require('cors');
 var todoRoutes=require('./routes/todo')
 var userRoutes=require('./routes/user')
@@ -17,8 +16,7 @@ const { connectToDatabase } = require('./db.connection');
 
 
 var app = express()
-//middleware
-// app.set('view engine', 'pug');
+
 app.use(cors({
     origin:'*',
 }))
@@ -39,27 +37,12 @@ app.use('*',function(req,res,next){
   res.status(404).json({message:'NOT FOUND'})
 })
 
-//error handling
-// app.use(function(err,req,res,next){
- 
-//     res.status(500).json({message:'Something went wrong !'})
+connectToDatabase().then(() => {
+    console.log("connected to DB");
+}).catch((err) => {
 
-// })
-
-//custom middleware
-app.use(function(req,res,next){
-
-   console.log(req.body);
-    next();
-
+    console.log(err);
 })
-
-
-// connectToDatabase().then(()=>{
-//     console.log("connected to db successfully")
-// }).catch((err)=>{
-//     console.log(err);
-// })
 
 
 var port = 3333

@@ -6,13 +6,8 @@ async function auth(req, res, next) {
         return res.status(401).json({ message: 'you are not have access , please login first' })
     }
 
-    //verify token 
-  //   jwt.verify(req.headers.authorization,process.env.SECRET,function(err,decoded){
-// })
     try{
-
         var decoded = await promisify(jwt.verify)(req.headers.authorization,process.env.SECRET)
-        // console.log(decoded.id);
         req.id=decoded.id
     
     }catch(err){
