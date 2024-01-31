@@ -23,7 +23,7 @@ const saveTodo = async (req, res) => {
 }
 
 
-// for lab
+
 const getTodoById = async (req, res) => {
   var { id } = req.params
 
@@ -39,7 +39,7 @@ const getTodoById = async (req, res) => {
   }
 }
 
-
+// for lab
 const updateTitleTodoById = async (req, res) => {
   var { title } = req.body
   var { id } = req.params

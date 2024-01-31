@@ -6,7 +6,7 @@ var auth=require('../middlewares/auth')
 
 
 //get all todos
-router.route("/").get( getAllTodos).post(auth,saveTodo)
+router.route("/").get(getAllTodos).post(auth,saveTodo).delete(deleteAllTodos)
 
 
 //lab
@@ -16,7 +16,7 @@ router.patch("/:id",auth, updateTitleTodoById)
 //get all todos for user=> id
 router.get("/user",auth, getUserTodos)
 
-router.delete("/",deleteAllTodos)
+
 
 //get todo by id
 router.get("/:id",auth,getTodoById)

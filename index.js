@@ -1,9 +1,3 @@
-// const validator=require('validator')
-
-// console.log( validator.isEmail("mona@gmail.com"));
-
-
-//////////////////////////////////////////////////////////////////////////////
 
 
 const express = require('express');
@@ -50,7 +44,7 @@ app.listen(port, () => {
     console.log(`server listening successfully on port ${port}`);
 })
 
-module.exports= app
+
 
 //cors
 
