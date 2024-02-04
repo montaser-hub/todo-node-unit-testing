@@ -61,6 +61,8 @@ const getUserTodos = async (req, res) => {
   try {
 
     var todos = await todosModel.find({ userId: req.id })
+    console.log('req.id: ', req.id);
+    console.log('todos: ', todos);
     todos.length > 0 && res.status(200).json({ data: todos })
     todos.length == 0 && res.status(200).json({ message: "Couldn't find any todos for " + req.id })
   } catch (e) {
@@ -72,7 +74,7 @@ const getUserTodos = async (req, res) => {
 const deleteAllTodos = async (_req, res) => {
   try {
     await todosModel.deleteMany()
-    res.status(200).json({ message: "users have been deleted successfully" })
+    res.status(200).json({ message: "todos have been deleted successfully" })
   } catch (e) {
     res.status(400).json({ message: e.message })
   }

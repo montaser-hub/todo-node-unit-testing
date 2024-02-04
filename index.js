@@ -25,7 +25,7 @@ app.get('/',async function(req,res){
     res.status(200).json({todos})
 })
 
-
+module.exports=app
 //not found
 app.use('*',function(req,res,next){
   res.status(404).json({message:'NOT FOUND'})

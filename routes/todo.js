@@ -6,7 +6,7 @@ var auth=require('../middlewares/auth')
 
 
 //get all todos
-router.route("/").get(getAllTodos).post(auth,saveTodo).delete(deleteAllTodos)
+router.route("/").get(getAllTodos).post(auth,saveTodo).delete(auth,deleteAllTodos)
 
 
 //lab

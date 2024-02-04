@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "SET SECRET=this-is-my-jwt-secret&&nodemon index "
+    "start": "SET SECRET=this-is-my-jwt-secret&&nodemon index ",
+    "test": "SET SECRET=this-is-my-jwt-secret&&nodemon --exec jasmine"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.4",
     "nodemon": "^3.0.2"
+  },
+  "devDependencies": {
+    "jasmine": "^5.1.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "supertest": "^6.3.4"
   }
 }
