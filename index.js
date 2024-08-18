@@ -6,7 +6,8 @@ var todoRoutes=require('./routes/todo')
 var userRoutes=require('./routes/user')
 var todosModel=require('./models/todo');
 const { connectToDatabase } = require('./db.connection');
-
+require("dotenv").config()
+var port = 3333
 
 
 var app = express()
@@ -20,32 +21,26 @@ app.use(express.json())
 app.use("/user",userRoutes)
 app.use('/todo',todoRoutes)
 
-app.get('/',async function(req,res){
+app.get('/',async function(_req,res){
     var todos= await todosModel.find()
-    res.status(200).json({todos})
+    res.status(200).json({data:todos})
 })
 
-module.exports=app
 //not found
-app.use('*',function(req,res,next){
-  res.status(404).json({message:'NOT FOUND'})
+app.use('*',function(_req,res,_next){
+  res.status(404).json({message:'Not found'})
 })
 
 connectToDatabase().then(() => {
     console.log("connected to DB");
 }).catch((err) => {
-
     console.log(err);
 })
 
 
-var port = 3333
 app.listen(port, () => {
     console.log(`server listening successfully on port ${port}`);
 })
 
 
-
-//cors
-
-//www.example.com             ex.www.example.com
+module.exports=app

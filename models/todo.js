@@ -7,7 +7,6 @@ var todoSchema=mongoose.Schema({
         minLength:[3,"title is less than 3 characters"],
         maxLength:25,
         required:true,
-        // unique:true,
         trim:true
 
     },

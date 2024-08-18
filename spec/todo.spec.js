@@ -11,11 +11,10 @@ describe("todo routes", () => {
     let userInDB, token, todoInDB
     beforeAll(async () => {
         let mockUser = { name: "nada", email: "asd@yahoo.com", password: "123" }
-
         let res1 = await req.post("/user/signup").send(mockUser)
         userInDB = res1.body.data
         let res2 = await req.post("/user/login").send(mockUser)
-        token = res2.body.token
+        token = res2.body.data
     })
     it("expect get(/todo) to res has all todos", async () => {
         let res = await req.get("/todo/")
@@ -23,13 +22,19 @@ describe("todo routes", () => {
         expect(res.body.data.length).toBe(0)
     })
     it("expect post(/todo) to add a todo", async () => {
-        let res = await req.post("/todo").send({ title: "eating launch" }).set({ authorization: token })
+        let res = await req.post("/todo").send({ title: "eating launch" }).set({ Authorization: token })
         expect(res.status).toBe(201)
         todoInDB = res.body.data
+    })
+    it("expect post(/todo) to add a todo with invalid title", async () => {
+        let res = await req.post("/todo").send({ title: "e" }).set({ Authorization: token })
+        expect(res.status).toBe(500)
+        expect(res.body.message).toContain("less than 3")
     })
     it("expect get(/todo/id) with no auth to get message to login first", async () => {
         let res = await req.get("/todo/" + todoInDB._id)
         expect(res.body.message).toContain("please login first")
+        
     })
     it("expect get(/todo/id) with valid auth to get message to login first", async () => {
         let res = await req.get("/todo/" + todoInDB._id).set({ authorization: token })
