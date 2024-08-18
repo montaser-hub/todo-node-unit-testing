@@ -31,7 +31,7 @@ const login=  async function (req, res) {
 
         var user = await userModel.findOne({ email })
         if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' })
+            return res.status(401).json({ message: 'Invalid email' })
         }
         var isValid = await bcrypt.compare(password, user.password)
 

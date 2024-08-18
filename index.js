@@ -7,7 +7,7 @@ var userRoutes=require('./routes/user')
 var todosModel=require('./models/todo');
 const { connectToDatabase } = require('./db.connection');
 require("dotenv").config()
-var port = 3333
+const port = 3333
 
 
 var app = express()
@@ -43,3 +43,4 @@ app.listen(port, () => {
 })
 
 
+module.exports=app
