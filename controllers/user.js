@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 
-const getAllUser =async(req, res) => {
+const getAllUser =async(_req, res) => {
     let users = await userModel.find()
     res.status(200).json({ data: users })
 }

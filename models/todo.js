@@ -12,8 +12,8 @@ var todoSchema=mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["To do","In progress","Done"],
-        default:"To do"
+        enum:["to do","doing","done"],
+        default:"to do"
     },
     userId:{
         type:mongoose.SchemaTypes.ObjectId,
