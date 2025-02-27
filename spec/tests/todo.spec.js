@@ -1,18 +1,25 @@
 const supertest= require("supertest")
-const app = require("..")
-const { clearDatabase } = require("../db.connection")
+const app = require("../..")
+const { clearDatabase } = require("../../db.connection")
 const req=supertest(app)
 
-fdescribe("todo routes:",()=>{
+describe("todo routes:",()=>{
  let mockUser= {name:"ali",email:"asd@asd.com",password:"1234"}
  let token,todoInDB
  afterAll(async()=>{
        await clearDatabase()
     })
     beforeAll(async () => {
-        await req.post("/user/signup").send(mockUser)
-       let res= await req.post("/user/login").send(mockUser)
-       token= res.body.data
+        try {
+           await req.post("/user/signup").send(mockUser)
+           
+           let res= await req.post("/user/login").send(mockUser)
+           token= res.body.data
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
     })
  it("get req(/todo/): res has todo=[]",async () => {
         let res= await req.get("/todo")
@@ -21,7 +28,7 @@ fdescribe("todo routes:",()=>{
     })
     it("post req(/todo): res has the just added todo",async()=>{
 
-        let res= await req.post("/todo").send({title:"read a book"}).set({authorization:token})
+        let res= await req.post("/todo").send({title:"read a book"}).set("Authorization",token)
         expect(res.status).toBe(201)
         expect(res.body.data.title).toBe("read a book")
         todoInDB=res.body.data

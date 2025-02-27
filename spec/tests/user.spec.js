@@ -1,7 +1,7 @@
 
 const supertest= require("supertest")
-const app = require("..")
-const { clearDatabase } = require("../db.connection")
+const app = require("../..")
+const { clearDatabase } = require("../../db.connection")
 const req=supertest(app)
 
 describe("user routes:",()=>{
