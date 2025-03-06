@@ -30,21 +30,7 @@ router.post("/", auth, async (req, res,next) => {
   }
 });
 
-/** get todo by id */
-router.get("/:id",auth, async (req, res,next) => {
-  var { id } = req.params
-  
-  try {
-    var todo = await getTodoById( id )
-    if (todo) {
-      res.status(200).json({ data: todo })
-    } else {
-      res.status(404).json({ message: "there is no todo with id"+id })
-    }
-  } catch (err) {
-    next(err)
-  }
-});
+
 /* -------------------- lab ------------------- */
 /** update todo by id **/
 router.patch("/:id",auth, async (req, res,next) => {
@@ -84,4 +70,20 @@ router.delete("/",auth,async(_req,res,next)=>{
   }
 })
 
+
+/** get todo by id */
+router.get("/:id",auth, async (req, res,next) => {
+  var { id } = req.params
+  
+  try {
+    var todo = await getTodoById( id )
+    if (todo) {
+      res.status(200).json({ data: todo })
+    } else {
+      res.status(404).json({ message: "there is no todo with id"+id })
+    }
+  } catch (err) {
+    next(err)
+  }
+});
 module.exports = router;

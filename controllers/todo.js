@@ -17,14 +17,10 @@ const getTodoById = async (id) => {
 }
 
 // for lab
-const updateTitleTodoById = async (id,title) => {
-   await todosModel.findOneAndUpdate({ _id: id }, { title }, { new: true })
-}
+const updateTitleTodoById = async (id,title) =>  await todosModel.findOneAndUpdate({ _id: id }, { title }, { new: true })
 
 
-const getUserTodos = async (userId) => {
-  await todosModel.find({ userId })
-}
+const getUserTodos = async (userId) =>   await todosModel.find({ userId })
 
 
 const deleteAllTodos = async () => await todosModel.deleteMany()
