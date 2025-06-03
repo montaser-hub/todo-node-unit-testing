@@ -80,7 +80,7 @@ router.get("/:id",auth, async (req, res,next) => {
     if (todo) {
       res.status(200).json({ data: todo })
     } else {
-      res.status(404).json({ message: "there is no todo with id"+id })
+      res.status(200).json({ message: "there is no todo with id"+id })
     }
   } catch (err) {
     next(err)

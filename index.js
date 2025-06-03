@@ -47,4 +47,3 @@ app.listen(port, () => {
   console.log(`server listening successfully http://localhost:${port}`);
 });
 
-module.exports= app

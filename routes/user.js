@@ -73,7 +73,7 @@ router.get("/:id", async (req,res,next) => {
     try {
         let user = await getUserById(req.params.id )
         if (user) res.status(200).json({ data: user })
-        else res.status(404).json({message:"there is no user with id="+req.params.id})
+        else res.status(200).json({message:"there is no user with id="+req.params.id})
     } catch (e) {
         next(e)
     }
