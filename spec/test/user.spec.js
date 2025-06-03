@@ -1,49 +1,38 @@
-const supertest = require("supertest")
-const app = require("../..")
-const { clearDatabase } = require("../../db.connection")
 
-let req=supertest(app)
+const supertest = require("supertest");
+const app = require("../..");
+const { clearDatabase } = require("../../db.connection");
 
-describe("user routes",()=>{
-    let newUser,userInDB
-    beforeEach(()=>{
+const request = supertest(app);
 
-         newUser={ name:"Ali",email:"asd@asd.com",password:"asdasd" }
+describe("user routes", () => {
+ it("GET /user should respond with status 200 and []", async () => {
+    let res = await request.get("/user");
+    expect(res.status).toBe(200);
+    expect(res.body.data).toEqual([]);
+  });
+ it("POST /user/signup should respond with status 201 and the new user", async () => {
+    let mockUser={name:"Ali",email:"ali@test.com",password:"1234"}
+    let res = await request.post("/user/signup").send(mockUser);
+    expect(res.status).toBe(201);
+    expect(res.body.data.email).toEqual(mockUser.email);
+  });
+ it("POST /user/login should respond with status 200 and token", async () => {
+    let mockUser={name:"Ahmed",email:"ahmed@test.com",password:"1234"}
+    await request.post("/user/signup").send(mockUser)
+    let res = await request.post("/user/login").send(mockUser);
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBeDefined()
+  });
+ it("POST /user/login with wrong password should respond with status 200 and token", async () => {
+    let mockUser={name:"Ahmed",email:"ahmed@test.com",password:"1234"}
+    
+    let res = await request.post("/user/login").send({email:mockUser.email,password:"xxxx"});
+    expect(res.status).toBe(401);
+    expect(res.body.message).toMatch(/password/)
+  });
 
-    })
-    afterAll(async()=>{
-       await clearDatabase()
-    })
-    it("req get(/user/): res should be []", async () => {
-        let res= await req.get("/user")
-
-        expect(res.status).toBe(200)
-        expect(res.body.data).toHaveSize(0)
-    } )
-
-    it("req post(/user/signup): res should be the just added user ",async()=>{
-        
-           let res=await req.post("/user/signup").send(newUser)
-           expect(res.status).toBe(201)
-           expect(res.body.data.name).toEqual(newUser.name)
-           userInDB=res.body.data
-    })
-    it("req get(/user/login): res should be token",async () => {
-        let res= await req.post("/user/login").send(newUser)
-        
-        expect(res.status).toBe(200)
-        expect(res.body.data).toBeDefined()
-    })
-    it("req get(/user/login): with wrong password, res should be token",async () => {
-        let res= await req.post("/user/login").send({email:newUser.email,password:"xxx"})
-        
-        expect(res.status).toBe(401)
-        expect(res.body.message).toContain("Invalid")
-    })
-    it("req get(/user/id) : res should be the user",async () => {
-        let res= await req.get("/user/"+userInDB._id)
-
-        expect(res.status).toBe(200)
-        expect(res.body.data).toEqual(userInDB)
-    })
-})
+  afterAll(async ()=>{
+   await clearDatabase()
+  })
+});

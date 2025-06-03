@@ -20,10 +20,9 @@ app.use("/user", userRoutes);
 app.use("/todo", todoRoutes);
 
 app.get("/", async function (_req, res) {
-    var todos = await todosModel.find();
-    res.status(200).json({ data: todos });
+  var todos = await todosModel.find();
+  res.status(200).json({ data: todos });
 });
-
 
 //error handling middleware
 app.use((err, _req, res, _next) => {
@@ -48,4 +47,4 @@ app.listen(port, () => {
   console.log(`server listening successfully http://localhost:${port}`);
 });
 
-module.exports = app;
+module.exports= app

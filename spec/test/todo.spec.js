@@ -1,44 +1,45 @@
+
 const supertest = require("supertest");
 const app = require("../..");
 const { clearDatabase } = require("../../db.connection");
 
-let req = supertest(app);
+const request = supertest(app);
+
 describe("todo routes", () => {
-    let newUser,token,todoInDB
-  afterAll(async () => {
-    await clearDatabase();
-  });
-  beforeEach(async()=>{
-    newUser={ name:"Ali",email:"asd@asd.com",password:"asdasd" }
-    await req.post("/user/signup").send(newUser)
-     res=await req.post("/user/login").send(newUser)
-     token=res.body.data
-  })
-  it("req get(/todo/): res should be []", async () => {
-    let res = await req.get("/todo");
-
+    let token
+    beforeAll(async () => {
+        let user={name:"Ali",email:"test@test.com",password:"1234"}
+        await request.post("/user/signup").send(user)
+        let res=await request.post("/user/login").send(user)
+        token= res.body.data
+    })
+ it("GET /todo should respond with status 200 and []", async () => {
+    let res = await request.get("/todo");
     expect(res.status).toBe(200);
-    expect(res.body.data).toHaveSize(0);
+    expect(res.body.data).toEqual([]);
   });
 
-  it("req post(/todo): with no auth res should be 401",async()=>{
-    let res= await req.post("/todo").send({title:"xxx"})
-
-    expect(res.status).toBe(401)
-    expect(res.body.message).toMatch(/login first/)
+  it("Post /todo with no auth should respond with 401 and not authorized",async () => {
+    let response= await request.post("/todo").send({title:"take some rest"})
+    expect(response.status).toBe(401)
+    expect(response.body.message).toMatch(/login first/)
   })
-  it("req post(/todo): with auth res should be new todo",async()=>{
-    let res= await req.post("/todo").send({title:"reading book"}).set({authorization:token})
+  it("Post /todo with auth should respond with status 201 and the new todo",async () => {
 
-    expect(res.status).toBe(201)
-    expect(res.body.data.title).toBe("reading book")
-    todoInDB= res.body.data
+    let response= await request.post("/todo").send({title:"take some rest"}).set({authorization:token})
+    expect(response.status).toBe(201)
+    expect(response.body.data.title).toEqual("take some rest")
   })
-  it("req get(/todo/id): with auth res should be new todo",async()=>{
-    let res= await req.get("/todo/"+todoInDB._id).set({authorization:token})
 
-    expect(res.status).toBe(200)
-    expect(res.body.data.title).toBe("reading book")
+  it("GET /todo/id should respond with status 200 and todo with id",async () => {
+    let res=await request.post("/todo").send({title:"sleep for 1 h"}).set({authorization:token})
+    let id= res.body.data._id
+    let response= await request.get("/todo/"+id).set({authorization:token})
+    expect(response.status).toBe(200)
+    expect(response.body.data.title).toBe("sleep for 1 h")
   })
-  
+
+  afterAll(async ()=>{
+   await clearDatabase()
+  })
 });
