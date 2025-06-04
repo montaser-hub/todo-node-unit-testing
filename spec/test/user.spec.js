@@ -26,8 +26,8 @@ describe("user routes",()=>{
     it("POST /user/login with wrong input should respond with status 200 with token",async () => {
         let user={name:"soha",email:"soha@test.com",password:"1234"}
        await request.post("/user/signup").send(user)
-       let res=await request.post("/user/login").send({email:user,password:"xxxx"})
-       expect(res.status).toBe(500)
+       let res=await request.post("/user/login").send({email:user.email,password:"xxxx"})
+       expect(res.status).toBe(401)
        expect(res.body.message).toMatch(/password/i)
     })
     afterAll(async ()=>{
