@@ -23,7 +23,7 @@ describe("user routes",()=>{
        expect(res.status).toBe(200)
        expect(res.body.data).toBeDefined()
     })
-    it("POST /user/login with wrong input should respond with status 200 with token",async () => {
+    it("POST /user/login with wrong input should respond with status 401 with the message",async () => {
         let user={name:"soha",email:"soha@test.com",password:"1234"}
        await request.post("/user/signup").send(user)
        let res=await request.post("/user/login").send({email:user.email,password:"xxxx"})

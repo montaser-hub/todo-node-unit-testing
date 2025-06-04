@@ -4,18 +4,18 @@ describe("lab testing:", () => {
 
     describe("users routes:", () => {
         // Note: user name must be sent in req query not req params
-        it("req to get(/user/search) ,expect to get the correct user with his name", async () => { })
-        it("req to get(/user/search) with invalid name ,expect res status and res message to be as expected", async () => { })
+        it("GET /user/search should respond with the correct user with the name requested",  () => { })
+        it("GET /user/search with invalid name should respond with status 200 and a message",  () => { })
 
     })
 
 
     describe("todos routes:", () => {
-        it("req to patch( /todo/) with id only ,expect res status and res message to be as expected", async () => { })
-        it("req to patch( /todo/) with id and title ,expect res status and res to be as expected", async () => { })
+        it("PATCH /todo/ with id only should respond with res status 400 and a message",  () => { })
+        it("PATCH /todo/ with id and title should respond with status 200 and the new todo",  () => { })
 
-        it("req to get( /todo/user) ,expect to get all user's todos", async () => { })
-        it("req to get( /todo/user) ,expect to not get any todos for user hasn't any todo", async () => { })
+        it("GET  /todo/user should respond with the user's all todos",  () => { })
+        it("GET  /todo/user for a user hasn't any todo, should respond with status 200 and a message",  () => { })
 
     })
 
