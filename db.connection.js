@@ -1,8 +1,8 @@
 const mongoose= require("mongoose")
 require("dotenv").config()
 
-const {DB_NAME,DB_HOST}=process.env
-const URL=`${DB_HOST}/${DB_NAME}`
+const {DB_Test_NAME,DB_HOST}=process.env
+const URL=`${DB_HOST}/${DB_Test_NAME}`
 
 
 /**
