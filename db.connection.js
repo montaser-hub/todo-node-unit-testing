@@ -1,6 +1,7 @@
 const mongoose= require("mongoose")
 require("dotenv").config()
 
+
 const {DB_Test_NAME,DB_HOST}=process.env
 const URL=`${DB_HOST}/${DB_Test_NAME}`
 
@@ -10,7 +11,7 @@ const URL=`${DB_HOST}/${DB_Test_NAME}`
  */
 const connectToDatabase = async () => {
     try {        
-        await mongoose.connect(URL);
+        await mongoose.connect("mongodb://127.0.0.1:27017/test");
     } catch (error) {
         throw error
     }

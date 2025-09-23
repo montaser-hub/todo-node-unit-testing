@@ -1,11 +1,15 @@
 
 describe("lab testing:", () => {
 
+    // afterAll(async () => {
+    //     await clearDatabase()
+    // })
 
     describe("users routes:", () => {
-        // Note: user name must be sent in req query not req params
-        it("GET /user/search should respond with the correct user with the name requested",  () => { })
-        it("GET /user/search with invalid name should respond with status 200 and a message",  () => { })
+        it("GET /user/search should respond with the correct user with the name requested",  () => { 
+            // Note: user name must be sent in request query not request params
+        })
+        it("GET /user/search with invalid name should respond with status 404 and the message",  () => { })
 
     })
 
@@ -19,9 +23,6 @@ describe("lab testing:", () => {
 
     })
 
-    // afterAll(async () => {
-    //     await clearDatabase()
-    // })
 
 
 })

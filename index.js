@@ -4,7 +4,7 @@ var todoRoutes = require("./routes/todo");
 var userRoutes = require("./routes/user");
 var todosModel = require("./models/todo");
 const { connectToDatabase } = require("./db.connection");
-require("dotenv").config();
+// require("dotenv").config();
 const port = 3333;
 
 var app = express();
@@ -31,7 +31,7 @@ app.use((err, _req, res, _next) => {
 });
 
 //not found
-app.use("*", function (_req, res, _next) {
+app.use( function (_req, res, _next) {
   res.status(404).json({ message: "Not found" });
 });
 
@@ -39,12 +39,14 @@ connectToDatabase()
   .then(() => {
     console.log("connected to DB");
   })
-  .catch((err) => {
+  .catch((err) => {    
     console.log(err);
   });
 
 app.listen(port, () => {
   console.log(`server listening successfully http://localhost:${port}`);
 });
+
+
 
 module.exports=app

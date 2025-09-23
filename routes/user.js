@@ -9,7 +9,6 @@ const {
 } = require("../controllers/user");
 var router = express.Router();
 
-//get all uses
 
 router.get("/", async (_req, res,next) => {
   try {
@@ -51,7 +50,7 @@ router.get("/search", async (req,res,next) => {
         var user = await getUserByName( name )
         if (user) res.status(200).json({data:user})
         else {
-            res.status(200).json({ message: "There is no user with name: " + name })
+            res.status(404).json({ message: "There is no user with name: " + name })
         }
     } catch (e) {
         next(e)
@@ -73,7 +72,7 @@ router.get("/:id", async (req,res,next) => {
     try {
         let user = await getUserById(req.params.id )
         if (user) res.status(200).json({ data: user })
-        else res.status(200).json({message:"there is no user with id="+req.params.id})
+        else res.status(404).json({message:"there is no user with id="+req.params.id})
     } catch (e) {
         next(e)
     }
