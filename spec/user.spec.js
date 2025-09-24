@@ -26,7 +26,7 @@ describe("user routes",()=>{
         expect(res.status).toBe(200)
         expect(res.body.data).toBeDefined()
     })
-    afterAll(async()=>{
-       await clearDatabase()
-    })
+    // afterAll(async()=>{
+    //    await clearDatabase()
+    // })
 })
